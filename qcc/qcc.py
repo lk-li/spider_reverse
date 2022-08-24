@@ -31,7 +31,7 @@ def get_key(api):
 
 
 def searchTrademark():
-    searchKey = parse.quote('万达集团')
+    searchKey = parse.quote('腾讯')
     x_pid = "d61bab86d8195aa1d826eb7b27af85a6"
     dats = "/api/search/searchmind?mindkeywords=true&mindtype=9&pagesize=5&person=true&searchkey=%s&suggest=true" % (
         searchKey.lower())
