@@ -591,8 +591,8 @@ Java.perform(function () {
     }
 });
 '''
-process = frida.get_device_manager().add_remote_device('127.0.0.1:6666')
-# process = frida.get_usb_device(timeout=1000).attach('19688')
+# process = frida.get_device_manager().add_remote_device('127.0.0.1:6666').attach('土巴兔装修')
+process = frida.get_usb_device(timeout=1000).attach('土巴兔装修')
 script = process.create_script(jscode)
 script.on('message',on_message)
 print('[*] Running CTF')
