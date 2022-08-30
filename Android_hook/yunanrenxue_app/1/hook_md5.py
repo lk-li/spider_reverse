@@ -591,10 +591,24 @@ Java.perform(function () {
     }
 });
 '''
-
-process = frida.get_usb_device(timeout=1000).attach('com.ishowedu.peiyin.mini')
+process = frida.get_device_manager().add_remote_device('127.0.0.1:6666')
+# process = frida.get_usb_device(timeout=1000).attach('19688')
 script = process.create_script(jscode)
 script.on('message',on_message)
 print('[*] Running CTF')
 script.load()
 sys.stdin.read()
+
+
+#启动方式2 spawn 重启APP 可以hook APP启动阶段
+# device = frida.get_usb_device(-1)
+# device = frida.get_device_manager().add_remote_device('127.0.0.1:6666')
+# pid = device.spawn(['com.to8to.housekeeper'])
+# process = device.attach(pid)
+#
+# script = process.create_script(jscode)
+# script.on('message', on_message)
+# print('[*] Running')
+# script.load()
+# device.resume(pid)
+# sys.stdin.read()
