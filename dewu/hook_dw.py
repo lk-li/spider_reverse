@@ -49,7 +49,7 @@ Java.perform(function(){
     })
 })'''
 
-# AES -ECB-pkcs5padding key:d245a0ba8d678a61
+# AES -ECB-pkcs5padding key:d245a0ba8d678a61  -->md5
 process = frida.get_device_manager().add_remote_device('127.0.0.1:6666').attach('得物')
 # process = frida.get_usb_device(timeout=1000).attach('19688')
 script = process.create_script(jscode)
