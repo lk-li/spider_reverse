@@ -43,11 +43,11 @@ function hookSo1() {
 
 function main() {
     Java.perform(function () {
-        hook();
+        //hook();
         hookSo1();
     })
 }
-
-setImmediate(main);
-
+document = {}
+//setImmediate(main);
+console.log(document.toString())
 // frida -UF -l hook.js
