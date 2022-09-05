@@ -61,5 +61,7 @@ function hook_pthread() {
 
 
 
-// hook_strstr();
+//hook_strstr();
 hook_pthread();
+//--no-pause
+// adb forward tcp:6666 tcp:6666
