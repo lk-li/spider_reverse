@@ -27,14 +27,28 @@ let ast = parse.parse(jscode);//js转ast
 traverse(ast, {
     MemberExpression(path) {//成员表达式
         //将l['o']变更为l.o类型
-        if (t.isIdentifier(path.node.property)) {//标识符类型判断
-            let name = path.node.property.value;//节点属性名称
+        let property = path.get('property');
+        if (!t.isIdentifier(path.node.property)) {//标识符类型判断
+            let value= path.node.property.value;//节点属性名称
             path.node.property.name = t.Identifier.name;
+            property.replaceWith(t.Identifier(value))
         }
         path.node.computed = false;//布尔类型修改
     },
 });
-
+// 第二种写法
+// const visitor =
+//     {
+//         "MemberExpression"(path) {
+//             let property = path.get('property');
+//             if (property.isStringLiteral()) {
+//                 let value = property.node.value;
+//                 path.node.computed = false;
+//                 property.replaceWith(t.Identifier(value))
+//             }
+//         }
+//     }
+// traverse(ast,visitor);
 
 
 let {code} = generator(ast,opts = {jsescOption:{"minimal":true}})

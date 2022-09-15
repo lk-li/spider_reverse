@@ -36,6 +36,16 @@ function decry_str(ast) {
 }
 ast = decry_str(ast)//进制数字还原与字符还原
 
+
+// const visitor =
+//     {
+//         StringLiteral(path)
+//         {
+//             path.get('extra').remove();
+//         },
+//     }
+//
+// traverse(ast,visitor);
 /*
 traverse(ast, {
     StringLiteral(path) {

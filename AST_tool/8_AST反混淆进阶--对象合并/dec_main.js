@@ -57,7 +57,7 @@ function merge_obj(path) {
         }
     })
 }
-    traverse(ast, {VariableDeclarator: {exit: [merge_obj]},});  // 将拆分的对象重新合并-花指令还原准备工作
+traverse(ast, {VariableDeclarator: {exit: [merge_obj]},});  // 将拆分的对象重新合并-花指令还原准备工作
 
 let {code} = generator(ast,opts = {jsescOption:{"minimal":true}})
 //文件保存
