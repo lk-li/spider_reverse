@@ -1465,7 +1465,7 @@ function get_ssxmod_itna() {
     ssxmod_itna = _0xea198c.compressToBase64(tts);
     tts1 = rand + '^41^' + tim + '^2mm47088|1070+469+47088mc0|kb0'
     ssxmod_itna1 = _0xea198c.compressToBase64(tts1);
-    return {'ssxmod_itna': ssxmod_itna, 'ssxmod_itna1': ssxmod_itna1}
+    return {'ssxmod_itna': ssxmod_itna1,'ssxmod_itna2': ssxmod_itna,}
 }
 
 //"3500770644^41^1663428315881^3mm2049331|611+142+2049331|324+-4+675295mc0|kb0"
