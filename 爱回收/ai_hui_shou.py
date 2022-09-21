@@ -89,7 +89,6 @@ def get_cont(Ahs_Token):
 
             captchaUrl = res.json()['data']['captchaUrl']
 
-            print(captchaUrl)
             headers = {
                 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
                 'Accept-Language': 'zh-CN,zh;q=0.9',
@@ -101,13 +100,11 @@ def get_cont(Ahs_Token):
             respon1 = requests.request("GET", captchaUrl, headers=headers)
 
             Captcha = ocr(respon1.content)
-            print(Captcha)
+
             # Times = res.headers['sw-tid'].split(',')[-1].split('.')[-1][0:13]
             Ahs_Once_Token = res.headers['ahs-once-token']
             Com_Captcha(Ahs_Once_Token, Captcha,data)
         else:
-            print(res.headers)
-
             print(res.text)
     except Exception as e:
         print('触发滑块验证码')
@@ -189,7 +186,6 @@ def Com_Captcha(Ahs_Once_Token, Captcha,data):
             Ahs_Once_Token = response.headers['ahs-once-token']
             Com_Captcha(Ahs_Once_Token, Captcha,data)
         else:
-            print(response.headers)
             print(response.text)
     except Exception as e:
         print('触发滑块验证码')
@@ -203,7 +199,7 @@ if __name__ == '__main__':
     cookies = {
         'Ahs-Token': Ahs_Token,
         # c'acw_tc': '76b20ffb16636644102307449e64921c86f12e978c2d4a2aee453c60c198c2',
-        'acw_sc__v3': '632a8b2a65d69f199aab1170fa6389204fd66b4a',
+        'acw_sc__v3': '632a92637baa5ed6f5faaf2c965c0a00a17490c5',
     }
     get_cont(Ahs_Token)
     # Com_Captcha('OTM5OGE4NjAyNWUwNDkxNDgzYTVhOTI1OTVmNDkyNmEuMTU3MjQzNzAxMTUwNzYwOTYwMA==', '7939')
