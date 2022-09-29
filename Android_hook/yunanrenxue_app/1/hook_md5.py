@@ -592,14 +592,14 @@ Java.perform(function () {
 });
 '''
 # process = frida.get_device_manager().add_remote_device('127.0.0.1:6666').attach('网易邮箱')
-process = frida.get_usb_device(timeout=1000).attach('爱回收')
+process = frida.get_usb_device(timeout=1000).attach('斗鱼极速版')
 script = process.create_script(jscode)
 script.on('message',on_message)
 print('[*] Running CTF')
 script.load()
 sys.stdin.read()
 
-
+# bc75e9ac2abf95f0621a8f9a7568652c
 #启动方式2 spawn 重启APP 可以hook APP启动阶段
 # device = frida.get_usb_device(-1)
 # device = frida.get_device_manager().add_remote_device('127.0.0.1:6666')
