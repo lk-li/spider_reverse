@@ -14,4 +14,54 @@ function get_csign(){
 	}
 })
 }
-setImmediate(get_csign)
+
+function Encode(){
+	Java.perform(function() {
+	var targetClass='com.douyu.lib.http.JniMakeUrl';
+	var methodName=decodeURIComponent('native%5fauthcodeEncode');
+	var gclass = Java.use(targetClass);
+	gclass[methodName].overload('android.content.Context','java.lang.String','java.lang.String').implementation = function(arg0,arg1,arg2) {
+		console.log('\nGDA[Hook native_authcodeEncode(android.content.Context,java.lang.String,java.lang.String)]'+'\n\targ0 = '+arg0+'\n\targ1 = '+arg1+'\n\targ2 = '+arg2);
+		var i=this[methodName](arg0,arg1,arg2);
+		console.log('\treturn '+i);
+		return i;
+	}
+})
+}
+
+function dDecode(){
+	Java.perform(function() {
+	var targetClass='com.douyu.lib.http.JniMakeUrl';
+	var methodName=decodeURIComponent('native%5fauthcodeDecode');
+	var gclass = Java.use(targetClass);
+	gclass[methodName].overload('android.content.Context','java.lang.String','java.lang.String').implementation = function(arg0,arg1,arg2) {
+		console.log('\nGDA[Hook native_authcodeDecode(android.content.Context,java.lang.String,java.lang.String)]'+'\n\targ0 = '+arg0+'\n\targ1 = '+arg1+'\n\targ2 = '+arg2);
+		var i=this[methodName](arg0,arg1,arg2);
+		console.log('\treturn '+i);
+		return i;
+	}
+})
+
+}
+
+
+function dataEncrypt(){
+	Java.perform(function() {
+	var targetClass='com.douyu.lib.http.JniMakeUrl';
+	var methodName=decodeURIComponent('native%5fdataEncrypt');
+	var gclass = Java.use(targetClass);
+	gclass[methodName].overload('android.content.Context','java.lang.String','int','int').implementation = function(arg0,arg1,arg2,arg3) {
+		console.log('\nGDA[Hook native_dataEncrypt(android.content.Context,java.lang.String,int,int)]'+'\n\targ0 = '+arg0+'\n\targ1 = '+arg1+'\n\targ2 = '+arg2+'\n\targ3 = '+arg3);
+		var i=this[methodName](arg0,arg1,arg2,arg3);
+		console.log('\treturn '+i);
+		return i;
+	}
+})
+}
+setImmediate(
+	get_csign,
+	Encode,
+	dDecode,
+	dataEncrypt
+
+)
