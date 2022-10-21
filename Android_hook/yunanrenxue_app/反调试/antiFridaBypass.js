@@ -37,13 +37,13 @@ function hook_pthread() {
 		var offset = parg2 - so_base;
 		console.log("so_name", so_name, "offset", offset, "path", so_path, "parg2", parg2);
 		var PC = 0;
-		if ((so_name.indexOf("libmsaoaidsec.so") > -1) || (so_name.indexOf("xxxx") > -1)) {
+		if ((so_name.indexOf("libxcrash.so") > -1) || (so_name.indexOf("xxxx") > -1)) {
 			console.log("find thread func offset", so_name, offset);
-			if ((107892 === offset)) {
+			if ((11628 === offset)) {
 				console.log("anti bypass");
-			} else if (67988 === offset) {
+			} else if (23108 === offset) {
 				console.log("anti bypass");
-			} else if (110308 === offset) {
+			} else if (23108 === offset) {
 				console.log("anti bypass");
 			} else {
 				PC = pthread_create(parg0, parg1, parg2, parg3);
@@ -58,10 +58,7 @@ function hook_pthread() {
 
 }
 
-
-
-
-//hook_strstr();
+// hook_strstr();
 hook_pthread();
 //--no-pause
 // adb forward tcp:6666 tcp:6666
