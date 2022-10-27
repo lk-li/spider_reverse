@@ -279,14 +279,14 @@ function getFullName(name){
 }
  
 function main(){
-    // hook_tcp_java();
-    // hook_udp_java();
-    // hook_ssl2_java();
-    // hook_ssl_java_nosocketinfo();
+    hook_tcp_java();
+    hook_udp_java();
+    hook_ssl2_java();
+    hook_ssl_java_nosocketinfo();
 
-    // hook_jni_tcp_udp();
+    hook_jni_tcp_udp();
     hook_jni_ssl();
-    // hook_jni_ssl_enc();
+    hook_jni_ssl_enc();
 
     // getFullName("SSLOutputStream")
 }
