@@ -63,7 +63,7 @@ traverse(ast, {
 })
 
  */
-
+// 将ast转成js代码，{jsescOption: {"minimal": true}} unicode -> 中文
 let {code} = generator(ast,opts = {jsescOption:{"minimal":true}})
 //文件保存
 fs.writeFile('./demoNew.js', code, (err) => {
