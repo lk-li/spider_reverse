@@ -13,14 +13,8 @@
 
 
 
+如果里面的案例帮助到你，感谢打赏
 
+<img src="https://github.com/lk-li/spider_reverse/img/20230215112412.jpg" alt="20230215112412" style="zoom:25%;" />   
 
-
-
-
-
-
-
-​	如果里面的案例帮助到你，感谢打赏
-
-<img src="D:\python_porject\spider_reverse\img\微信图片_20230215112412.jpg" alt="微信图片_20230215112412" style="zoom:25%;" />                           <img src="D:\python_porject\spider_reverse\img\微信图片_20230215112419.jpg" alt="微信图片_20230215112419" style="zoom:25%;" />
+<img src="https://github.com/lk-li/spider_reverse/img/20230215112419.jpg" alt="20230215112419" style="zoom:25%;" />
