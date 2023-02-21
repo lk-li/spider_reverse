@@ -172,7 +172,7 @@ def get_slide_track(distance):
 
 
 def get_trajectory(distance):
-    distancez = round((distance - 13) / (316 - 48) * 500)
+    distancez =int((distance * 316 / 686) - (30 - int(20 * 316 / 686)))
     slide_track = []
     for _ in get_slide_track(distancez):
         _ = [str(i) for i in _]
