@@ -7,7 +7,7 @@ import requests
 import new_pb2 as pb
 import execjs
 ctx=execjs.compile(open('get_handle.js','r').read())
-
+ctx2=execjs.compile(open('wss_sign.js','r',encoding='utf8').read())
 
 pushproto_PushFrame = pb.pushproto_PushFrame()
 pushproto_PushFrame.payloadtype = "hb"
@@ -28,7 +28,8 @@ def fetch_live_room_info(url):
     room_id = data_dict['app']['initialState']['roomStore']['roomInfo']['roomId']
     room_title = data_dict['app']['initialState']['roomStore']['roomInfo']["room"]['title']
     room_user_count = data_dict['app']['initialState']['roomStore']['roomInfo']["room"]['user_count_str']
-    wss_url = f"wss://webcast3-ws-web-lq.douyin.com/webcast/im/push/v2/?app_name=douyin_web&version_code=180800&webcast_sdk_version=1.3.0&update_version_code=1.3.0&compress=gzip&internal_ext=internal_src:dim|wss_push_room_id:{room_id}|wss_push_did:7140459943756301854|dim_log_id:202212281349305A73D850664DB518C21B|fetch_time:1672206570185|seq:1|wss_info:0-1672206570185-0-0|wrds_kvs:WebcastRoomStatsMessage-1672206566915058992_InputPanelComponentSyncData-1672187049066887013_WebcastRoomRankMessage-1672206560973484605&cursor=t-1672206570185_r-1_d-1_u-1_h-1&host=https://live.douyin.com&aid=6383&live_id=1&im_path=/webcast/im/fetch/&device_platform=web&room_id={room_id}"
+    wss_url = f"wss://webcast3-ws-web-hl.douyin.com/webcast/im/push/v2/?app_name=douyin_web&version_code=180800&webcast_sdk_version=1.3.0&update_version_code=1.3.0&compress=gzip&internal_ext=internal_src:dim|wss_push_room_id:{room_id}|wss_push_did:7194466010916898342|dim_log_id:2023031913364589780C64C4339D41A267|fetch_time:1679204206030|seq:1|wss_info:0-1679204206030-0-0|wrds_kvs:DoubleLikeSyncData-1679199122146303909_WebcastRoomStatsMessage-1679204201351366602_HighlightContainerSyncData-36_WebcastRoomRankMessage-1679204165374499420_InputPanelComponentSyncData-1679198799827628222&cursor=t-1679204206030_r-1_d-1_u-1_h-1&host=https://live.douyin.com&aid=6383&live_id=1&did_rule=3&debug=false&maxCacheMessageNumber=20&endpoint=live_pc&support_wrds=1&im_path=/webcast/im/fetch/&user_unique_id=7194466010916898342&device_platform=web&cookie_enabled=true&screen_width=1536&screen_height=864&browser_language=zh-CN&browser_platform=Win32&browser_name=Mozilla&browser_version=5.0%20(Windows%20NT%2010.0;%20Win64;%20x64)%20AppleWebKit/537.36%20(KHTML,%20like%20Gecko)%20Chrome/111.0.0.0%20Safari/537.36&browser_online=true&tz_name=Asia/Shanghai&identity=audience&room_id={room_id}&heartbeatDuration=0&signature={ctx2.call('test', f',live_id=1,aid=6383,version_code=180800,webcast_sdk_version=1.3.0,room_id={room_id},sub_room_id=,sub_channel_id=,did_rule=3,user_unique_id=7194466010916898342,device_platform=web,device_type=,ac=,identity=audience')}"
+    # print(wss_url)
     # print(wss_url)
     # print(room_id, room_title, room_user_count)
     return room_id, room_title, room_user_count, wss_url, ttwid
@@ -60,7 +61,7 @@ def keymessage(ws,byte,logid,payloadtype):
                 # print(nickname)
                 content = webcast_im_ChatMessage.content
                 # print(content)
-                # print(nickname, ':', content)
+                print(nickname, ':', content)
             except:
                 pass
         if item.method == 'WebcastGiftMessage':
@@ -81,7 +82,7 @@ def keymessage(ws,byte,logid,payloadtype):
                 user = webcast_im_SocialMessage.user.nickname
                 text = webcast_im_SocialMessage.common.displaytext.defaultpattern.strip('{0:user} ')
                 # print(webcast_im_SocialMessage)
-                # print(user,text)
+                print(user,text)
             except:
                 pass
         if item.method == 'WebcastLikeMessage':
@@ -92,7 +93,7 @@ def keymessage(ws,byte,logid,payloadtype):
                 # print(user)
                 text = webcast_im_LikeMessage.common.displaytext.pieces[-1].stringvalue
                 # print(text)
-                # print(user,text)
+                print(user,text)
 
             except:
                 pass
