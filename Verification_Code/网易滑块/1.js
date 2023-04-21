@@ -571,33 +571,46 @@ function callback() {
 }
 
 
-function get_data(token_,xyt_list, offset) {
+function get_data(token_,stk) {
 
     // var traceData = []
     // for (var i of trace_list) {
     //     ff = _0x101d27(token_, i + "");
     //     traceData.push(ff);
     // }
-
+    stk_l=stk+11
+    stk_list = [];
     var traceData = [];
+    var drag=Date.now();
+    for (i = 4; i <=stk_l ; i++) { //i=滑动距离
+            var y=Math.round(Math.random());
+       //console.log(token, [Math['round'](i), Math['round'](y),i+100+(i*10)] + '');
+        //_0x5e65a4 = _0x1767c8(token, [Math['round'](i), Math['round'](0),_0x43823b['now']()-drag] + '')
 
-    for(var i=0;i<xyt_list.length;i++) {
-            var gap = xyt_list[i];
-            var _0x5321b1 = _0x35181a(token_, gap+ '');
-            traceData.push(_0x5321b1)
+        _0x5e65a4 = _0x35181a(token_, [Math['round'](i), Math['round'](y),100+(i*10)] + '');
+        traceData.push(_0x5e65a4)
+        // stk_list.push(_0x5e65a4)
     }
+
+    // var traceData = [];
+
+    // for(var i=0;i<xyt_list.length;i++) {
+    //         var gap = xyt_list[i];
+    //         var _0x5321b1 = _0x35181a(token_, gap+ '');
+    //         traceData.push(_0x5321b1)
+    // }
 
     var _0x1b8bed = _0x20933a["sample"](traceData, 50)
     // console.log(_0x1b8bed)
 
-  , _0x1615c3 = _0x408cad(_0x35181a(token_, parseInt(offset, 10) / 320 * 100 + ""));//这里slider_distance-10 看的距离左边的距离
+  , _0x1615c3 = _0x408cad(_0x35181a(token_, stk /220 * 100 + ""));//这里slider_distance-10 看的距离左边的距离
     var data =JSON.stringify( {
         "d": _0x408cad(_0x1b8bed['join'](':')),
         "m": "",
         "p": _0x1615c3,
         "ext": _0x408cad(_0x35181a(token_, 1 + "," + traceData['length']))
     })
-    return data
+    return [JSON.stringify(data), get_cb(),stk_l]
 }
 // Math.random=function() {
 //     return 0.7240567752446443
@@ -610,4 +623,4 @@ function get_data(token_,xyt_list, offset) {
 // console.log(get_cb())
 // console.log(callback())
 
-// console.log(get_data("3e222d0193fd4d45adb2575aa24c7373",[],"220.5px"))
+console.log(get_data("3e222d0193fd4d45adb2575aa24c7373",220))
