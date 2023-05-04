@@ -90,12 +90,12 @@ class Kuaishou():
         params = {
             "captchaSn": self.captchaSn
         }
-        with open("bg_picture.jpg", "wb") as f:
-            f.write(requests.get(ditu, params=params).content)
-        with open("cut_picture.jpg", "wb") as f:
-            f.write(requests.get(quekou, params=params).content)
-        name1 = "bg_picture.jpg"
-        name2 = "cut_picture.jpg"
+        # with open("bg_picture.jpg", "wb") as f:
+        #     f.write(requests.get(ditu, params=params).content)
+        # with open("cut_picture.jpg", "wb") as f:
+        #     f.write(requests.get(quekou, params=params).content)
+        name1 = requests.get(ditu, params=params).content
+        name2 = requests.get(quekou, params=params).content
         distance = self.slide_match(name1, name2)
         distance_ = int(round(int(distance['target'][0]) * 0.469, 0) - 5)
         # print('distance:', distance_)
@@ -104,13 +104,13 @@ class Kuaishou():
         self.trajectory = gj.Generate_trajectory().get_slide_track(int(distance_ * 3.42))
 
     # 用ddddocr识别滑块距离
-    def slide_match(self, name1, name2):
+    def slide_match(self, target_bytes, background_bytes):
         det = ddddocr.DdddOcr(det=False, ocr=False, show_ad=False)
-        with open(name1, 'rb') as f:
-            target_bytes = f.read()
-
-        with open(name2, 'rb') as f:
-            background_bytes = f.read()
+        # with open(name1, 'rb') as f:
+        #     target_bytes = f.read()
+        #
+        # with open(name2, 'rb') as f:
+        #     background_bytes = f.read()
 
         res = det.slide_match(target_bytes, background_bytes, simple_target=True)
 
