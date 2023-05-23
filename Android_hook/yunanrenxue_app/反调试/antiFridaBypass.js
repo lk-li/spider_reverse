@@ -37,9 +37,9 @@ function hook_pthread() {
 		var offset = parg2 - so_base;
 		console.log("so_name", so_name, "offset", offset, "path", so_path, "parg2", parg2);
 		var PC = 0;
-		if ((so_name.indexOf("libxcrash.so") > -1) || (so_name.indexOf("xxxx") > -1)) {
+		if ((so_name.indexOf("libmsaoaidsec.so") > -1) || (so_name.indexOf("xxxx") > -1)) {
 			console.log("find thread func offset", so_name, offset);
-			if ((11628 === offset)) {
+			if ((95736 === offset)) {
 				console.log("anti bypass");
 			} else if (23108 === offset) {
 				console.log("anti bypass");
