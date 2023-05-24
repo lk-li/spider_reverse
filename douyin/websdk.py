@@ -182,9 +182,9 @@ def int32(i):
 
 def fixk(k):
     if len(k) < 4:
-        k += '\0' * (4 - len(k))
+        k = k[:4]
+        k.extend([0] * (4 - len(k)))
     return k
-
 
 def mx(sum, y, z, p, e, k):
     tmp = (((z >> 5) ^ (y << 2)) + ((y >> 3) ^ (z << 4)))
@@ -216,9 +216,9 @@ def encryptUint32Array(v, k):
     y, z, sum, e, p, q = 0, 0, 0, 0, 0, 0
     z = v[n]
     sum = 0
-    for q in range((6 + 52 // length) | 0, 0, -1):
+    for q in range(int(6 + 52 / length)):
         sum = int32(sum + DELTA)
-        e = sum >> 2 & 3
+        e = int(sum >> 2) & 3
         for p in range(n):
             y = v[p + 1]
             z = v[p] = int32(v[p] + mx(sum, y, z, p, e, k))

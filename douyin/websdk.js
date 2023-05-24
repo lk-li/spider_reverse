@@ -507,6 +507,7 @@ function fixk(k) {
 }
 
 function encryptUint32Array(v, k) {
+    DELTA = 2654435769;
     var length = v.length;
     var n = length - 1;
     var y, z, sum, e, p, q;

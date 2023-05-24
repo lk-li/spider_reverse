@@ -436,4 +436,6 @@ if __name__ == "__main__":
         DouYinEncrypt(ua).generate_signature(
             url, api, body, "json"
         ))
+    print(
+        DouYinEncrypt(ua).cookie_signature('https://www.douyin.com/user/MS4wLjABAAAAUWuP6FIDGSI3qrs-Wu3zYZ56rK39RM2hDFUdjzoDBZzWAE1V7I1SzlmhQkPXsxgv?vid=7227272840800734467','0646df01d0046926f5726','QKB9rb6gDhCm8MVM.NE0m2Bs8Ne6SCGTboLpNy89cR3l31AZlvcEnGc9-yp7BTzh701a'))
 
