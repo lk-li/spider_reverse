@@ -93,14 +93,14 @@ function des(_str) {
 //post->x1: md5(url=/api/sns/web/v1/feed{"source_note_id":"642934cb000000001203fd14"})
 function Decrypt(x1,a1){
     let x4 = Date.now();
-    let txt = 'x1='+x1+';x2=0|0|0|1|0|0|1|0|0|0|1|0|0|0|0;x3=188222113e9vu6o7mxmi01wj9d6xwwsrk8xc64hk050000223259;x4='+x4+';'
+    let txt = 'x1='+x1+';x2=0|0|0|1|0|0|1|0|0|0|1|0|0|0|0;x3='+a1+';x4='+x4+';'
     let payload = des(txt);
-    let XYW = '{"signSvn":"50","signType":"x1","appId":"xhs-pc-web","signVersion":"1","payload":"'+payload+'"}'
+    let XYW = '{"signSvn":"51","signType":"x1","appId":"xhs-pc-web","signVersion":"1","payload":"'+payload+'"}'
     X_d = {
         'x-s': 'XYW_'+ base64Encode(XYW),
-        'x-t': x4};
-    console.log(X_d)
+        'x-t': x4+''};
     return X_d
 }
 
-Decrypt('ad8cdf1c752642088073c5f67a0cfc78')
+
+//Decrypt('ad8cdf1c752642088073c5f67a0cfc78','1880fa5e55d7id6uxds2r2cu73pm4whc579o1qbtk30000256007')
