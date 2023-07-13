@@ -23,8 +23,17 @@ function hook_vpn(){
             console.log("res hasTransport ==> ", res)
             return false;
         }
+        var NetworkInfo = Java.use("android.net.NetworkInfo")
+        NetworkInfo.isConnected.implementation = function(){
+            console.log("first called!")
+            var result = this.isConnected()
+            console.log('result',result)
+            return false
+            // return result
+        }
+
 
     })
 }
 
-setImmediate(hook_vpn);
+setImmediate(hook_vpn,2000);
