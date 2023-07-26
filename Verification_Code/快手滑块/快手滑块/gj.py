@@ -91,7 +91,7 @@ class Generate_trajectory:
 
         if not isinstance(distance, int) or distance < 0:
             raise ValueError(f"distance类型必须是大于等于0的整数: distance: {distance}, type: {type(distance)}")
-        count_x = random.randint(15, 25)
+        count_x = random.randint(22, 29)
         # 共记录count次滑块位置信息
         count = count_x + int(distance / 20)
         # 初始化滑动时间
