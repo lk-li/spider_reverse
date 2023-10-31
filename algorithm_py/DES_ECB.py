@@ -15,7 +15,6 @@ def des_ecb_decrypt_hex(key, hex_ciphertext):
     # 从十六进制字符串中恢复出密文
     ciphertext = binascii.unhexlify(hex_ciphertext)
     # 对密文进行解填充，恢复出原始明文
-    # plaintext = unpad(ciphertext, DES.block_size)
     plain =cipher.decrypt(ciphertext)
     plaintext =unpad(plain, DES.block_size)
     return plaintext
