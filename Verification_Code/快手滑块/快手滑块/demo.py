@@ -1,5 +1,5 @@
 import requests
-import re
+import re, execjs
 from urllib import parse
 import json
 import ddddocr
@@ -43,6 +43,16 @@ class Kuaishou():
         out = p.stdout.read()
         # print('out:', out.strip())
         return out.strip()
+
+    def encrypt1(self):
+        """
+            加载js
+            :return:
+            """
+        with open("encrypt1.js", "rb") as f:
+            js = f.read().decode()
+        ctx = execjs.compile(js)
+        return ctx
 
     # 拿回captchaSession参数
     def get_captchaSession(self):
@@ -139,7 +149,9 @@ class Kuaishou():
             captcha_str += f'&{k}={parse.quote(str(v))}'
         captcha_txt = captcha_str[1:].replace('/', '%2F')
 
-        data_crack = self.encrypt(captcha_txt)
+        # data_crack = self.encrypt(captcha_txt).decode()
+        data_cr = self.encrypt1()
+        data_crack = data_cr.call("get_data",captcha_txt)
         headers = {
             'Connection': 'keep-alive',
             'Pragma': 'no-cache',
@@ -154,16 +166,18 @@ class Kuaishou():
             'Sec-Fetch-Site': 'same-origin',
             'Sec-Fetch-Mode': 'cors',
             'Sec-Fetch-Dest': 'empty',
-            'Referer': 'https://captcha.zt.kuaishou.com/iframe/index.html?captchaSession='+ self.captchaSession,
+            'Referer': 'https://captcha.zt.kuaishou.com/iframe/index.html?captchaSession=' + self.captchaSession,
             'Accept-Language': 'zh-CN,zh;q=0.9',
             # 'Cookie': 'did=web_b6d22b80ebf138d81ecf89c218f6f838',
         }
 
         json_data = {'verifyParam': data_crack}
 
-        response = self.session.post('https://captcha.zt.kuaishou.com/rest/zt/captcha/sliding/kSecretApiVerify',headers=headers,json=json_data)
+        response = self.session.post('https://captcha.zt.kuaishou.com/rest/zt/captcha/sliding/kSecretApiVerify',
+                                     headers=headers, json=json_data)
         print(response.json())
         print(response)
+
     def main(self):
         for i in range(10):
             self.get_captchaSession()
