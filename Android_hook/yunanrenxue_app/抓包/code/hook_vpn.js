@@ -31,8 +31,6 @@ function hook_vpn(){
             return false
             // return result
         }
-
-
     })
 }
 
