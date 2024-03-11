@@ -7,6 +7,9 @@
 @File       : chaosvmt 
 @ Time      : 2024-01-16 14:59
 """
+import hashlib
+import time
+
 from chaosvm import prepare
 from urllib.parse import unquote
 
@@ -226,6 +229,22 @@ def prehandle():
     return sess, pow_answer, nonce, tdc_path
 
 
+def get_pow(work):
+    tim = int(time.time() * 1000)
+    ans = 0
+    target = work["target"]
+    while True:
+        ans += 1
+        in_string = work["nonce"] + str(ans)
+        md5_hash = hashlib.md5(in_string.encode()).hexdigest()
+        if target == md5_hash or (int(time.time() * 1000) - tim) > 30000:
+            break
+    return {
+        "ans": ans,
+        "duration": int(time.time() * 1000) - tim
+    }
+
+
 def chaos_vm_tdc(tdc_path, track):
     headers = {
         "Accept": "*/*",
@@ -267,17 +286,13 @@ def mian():
     with open('tp.png', 'rb') as f:
         tp = f.read()
 
-    with open('ans.js', 'r') as f:
-        cc1 = f.read()
-
     tl = get_distance(bg, tp, im_show=False, save_path=None)
 
-    ctx1 = execjs.compile(cc1)
     track = get_slide_trackone(tl[0] - 2)
 
     tdc_da = chaos_vm_tdc(tdc_path, track)
 
-    ts_1 = ctx1.call('getWorkloadResult', {"target": nonce, "nonce": pow_answer})
+    ts_1 = get_pow({"target": nonce, "nonce": pow_answer})
     # print(ts_1)
     data = {
         'collect': tdc_da["collect"],
