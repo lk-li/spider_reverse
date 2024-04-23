@@ -141,18 +141,24 @@ class bebd:
         response = requests.get(self.get_url, headers=headers, params=params_get).text[18:-2]
         # print(response)
         json_data = json.loads(response)
+        if "ok" in response:
+            json_data = json_data["data"]
+            if json_data["type"] == 2:
+                token = json_data.get('token')
+                self._write_img(json_data['bg'][0], 320, "./img/bg.jpg")
+                self._write_img(json_data['front'][0], 60, './img/front.png')
+                # 获取缺口位置
+                distance = self._notch_position()
+                logger.info(f'滑动距离为: {distance}')
+                con = {"token": token, "distance": distance, "type": json_data["type"], "fp": fp, "dt": dt_r}
+                return con
+            else:
+                logger.info(f'出现其他验证码类型: {json_data["type"]}')
+                return None
+        else:
+            print(response)
 
-        token = json_data["data"].get('token')
-        self._write_img(json_data["data"]['bg'][0], 320, "./img/bg.jpg")
-        self._write_img(json_data["data"]['front'][0], 60, './img/front.png')
-
-        # 获取缺口位置
-        distance = self._notch_position()
-
-        logger.info(f'滑动距离为: {distance}')
-        return distance, token, fp, dt_r
-
-    def verify(self, distance, token, fp, dt):
+    def verify(self, con):
         headers = {
             "Accept": "*/*",
             "Accept-Language": "zh-CN,zh;q=0.9",
@@ -168,15 +174,15 @@ class bebd:
             "sec-ch-ua-mobile": "?0",
             "sec-ch-ua-platform": "\"Windows\""
         }
-        track = self._track(distance + 11)
+        track = self._track(con["distance"] + 11)
         # track = self.get_track(x)
-        data = self.dun.call("onVerifyCaptcha", track, token, distance)
+        data = self.dun.call("onVerifyCaptcha", track, con["token"], con["distance"])
         params = {
             "referer": self.referer,
             "zoneId": "CN31",
-            "dt": dt,
+            "dt": con["dt"],
             "id": self.hk_id,
-            "token": token,
+            "token": con["token"],
             "acToken": "undefined",
             "data": data,
             "width": "320",
@@ -198,15 +204,16 @@ class bebd:
         validate = data.get('validate')
         logger.info(f"validate==>{validate}")
         if validate:
-            validate_en = self.dun.call('validate', validate, fp, zone_id)
+            validate_en = self.dun.call('validate', validate, con["fp"], zone_id)
             logger.info(f"validate_en==>{validate_en}")
             return validate_en
 
     def run(self):
-        x, token, fp, dt = self.get()
-        return self.verify(x, token, fp, dt)
+        con = self.get()
+        if con:
+            return self.verify(con)
 
 
 if __name__ == '__main__':
-    for i in range(3):
+    for i in range(1):
         bebd().run()
