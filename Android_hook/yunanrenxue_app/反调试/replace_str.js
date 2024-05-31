@@ -23,6 +23,27 @@ function replace_str() {
             }
         }
     });
+    Interceptor.attach(pt_strcmp, {
+        onEnter: function (args) {
+            var str1 = args[0].readCString();
+            var str2 = args[1].readCString();
+            if (
+                str2.indexOf("REJECT") !== -1 ||
+                str2.indexOf("tmp") !== -1 ||
+                str2.indexOf("frida") !== -1 ||
+                str2.indexOf("gum-js-loop") !== -1 ||
+                str2.indexOf("gmain") !== -1 ||
+                str2.indexOf("linjector") !== -1
+            ) {
+                //console.log("strcmp-->", str1, str2);
+                this.hook = true;
+            }
+        }, onLeave: function (retval) {
+            if (this.hook) {
+                retval.replace(0);
+            }
+        }
+    })
 
 }
 
@@ -74,6 +95,20 @@ function replace_str_maps() {
             }
         }
     });
+
+    Interceptor.attach(pt_strcmp, {
+        onEnter: function (args) {
+            var str1 = args[0].readCString();
+            var str2 = args[1].readCString();
+            if (str2.indexOf("REJECT") !== -1  || str2.indexOf("frida") !== -1) {
+                this.hook = true;
+            }
+        }, onLeave: function (retval) {
+            if (this.hook) {
+                retval.replace(0);
+            }
+        }
+    })
 
 }
 
