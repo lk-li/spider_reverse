@@ -5,10 +5,18 @@ function hook_dlopen(soName = '') {
                 var pathptr = args[0];
                 if (pathptr !== undefined && pathptr != null) {
                     var path = ptr(pathptr).readCString();
+                    // console.log("load " + path)
                     if (path.indexOf(soName) >= 0) {
+                        // this.is_can_hook = true;
                         locate_init()
                     }
                 }
+            },
+            onLeave: function (retval) {
+                // if(this.is_can_hook){
+                //     hook_JNI_OnLoad()
+                // }
+
             }
         }
     );
@@ -27,8 +35,9 @@ function locate_init() {
                     if (name.indexOf("ro.build.version.sdk") >= 0) {
                         // 这是.init_proc刚开始执行的地方，是一个比较早的时机点
                         // do something
-                        hook_pthread_create()
-                        // bypass()
+
+                        // hook_pthread_create()
+                         bypass()
                     }
                 }
             }
@@ -60,5 +69,15 @@ function bypass(){
     nop(module.base.add(0x10AE4))
     nop(module.base.add(0x113F8))
 }
-
+function hook_JNI_OnLoad(){
+    let module = Process.findModuleByName("libmsaoaidsec.so")
+    Interceptor.attach(module.base.add(0xC6DC + 1), {
+        onEnter(args){
+            console.log("call JNI_OnLoad")
+        }
+    })
+}
+// https://www.wandoujia.com/apps/281291/history_v7261100
 setImmediate(hook_dlopen, "libmsaoaidsec.so")
+
+
